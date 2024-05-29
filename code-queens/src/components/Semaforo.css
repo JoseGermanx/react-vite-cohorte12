@@ -1,0 +1,47 @@
+body { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    margin: 0; 
+    background-color: #f0f0f0; 
+  } 
+  
+  .traffic-signal { 
+    width: 100px; 
+    height: 300px; 
+    background-color: #333; 
+    border-radius: 10px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    align-items: center; 
+  } 
+  
+  .light { 
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%; 
+    margin: 10px; 
+  } 
+  
+  .red { 
+    background-color: red; 
+  } 
+  
+  .yellow { 
+    background-color: yellow; 
+ 
+  } 
+  
+  .green { 
+    background-color: green; 
+
+  }
+  
+  
+  .glow {
+    box-shadow: 0px 0px 9px 9px rgb(237, 237, 221);
+  }
+  
+  
