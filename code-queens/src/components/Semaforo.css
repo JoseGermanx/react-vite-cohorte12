@@ -27,10 +27,15 @@ body {
   
   .red { 
     background-color: red; 
-  } 
+  }
+
+  .red-image {
+    background-image: url('https://www.flaticon.com/svg/static/icons/svg/3523/3523063.svg');
+    background-size: cover;
+  }
   
   .yellow { 
-    background-color: yellow; 
+    background-color: yellow;
  
   } 
   
