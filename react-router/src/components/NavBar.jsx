@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
+
+  const [logueado, setLogueado] = useState(true)
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary mb-5">
       <div className="container-fluid">
@@ -26,9 +29,9 @@ const NavBar = () => {
             <Link className="nav-link" to="/quienes-somos">
               Quienes Somos
             </Link>
-            <Link className="nav-link" to="/registro">
+            {!logueado ? <Link className="nav-link" to="/registro">
               Registro
-            </Link>
+            </Link> : <p>Logueado</p>}
             <Link className="nav-link disabled" aria-disabled="true">
               Disabled
             </Link>
