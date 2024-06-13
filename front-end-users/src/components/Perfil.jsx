@@ -1,25 +1,28 @@
 import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
+import BtnCerrarSesion from "./BtnCerrarSesion";
 
 // mostrar datos del usario logueado
 function Perfil() {
-  const [usuario, setUsuario] = useState(null);
+  const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem("user")) || null); /// leer el valor del localstore
     const navigate = useNavigate();
 
   return (
     <div className="container">
       {usuario === null ? (
         <>
-        <h1>No hay usuario loguedo</h1>
+        <h1>No hay usuario logueado</h1>
         <button className="btn btn-info " onClick={() => navigate('/registro')}>Registrar Usuario</button>
+        <button className="btn btn-info " onClick={() => navigate('/login')}>Login</button>
         </>
       ) : (
         <>
           <h1>Datos del Usuario</h1>
-          <p>Nombre: </p>
-          <p>Apellido: </p>
-          <p>Correo Electrónico: </p>
+          <p>Nombre: {usuario.name} </p>
+          <p>Correo Electrónico: {usuario.email} </p>
+          <p>ID: {usuario.id} </p>
+          <BtnCerrarSesion />
         </>
       )}
     </div>

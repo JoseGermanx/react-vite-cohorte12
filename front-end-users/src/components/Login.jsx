@@ -26,6 +26,7 @@ function Login() {
       if(data.error == false)
         {
           alert("El usuario fue logueado correctamente")
+          localStorage.setItem('user', JSON.stringify(data.data)) /// guardar el valor en el localstore
           navigate('/')
 
         } else {

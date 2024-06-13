@@ -15,11 +15,12 @@ const Game = () => {
         width: 640,
         height: 480,
         canvas: gameContainerRef.current,
-        background: [0, 0, 255],
+        background: [141, 183, 255],        
       });
 
       // Add a sprite for proof of concept
       k.loadSprite("bean", "https://kaboomjs.com/sprites/bean.png");
+      k.setGravity(3200);
 
       // Add a simple Kaplay.js game logic
       const player = k.add([
