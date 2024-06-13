@@ -5,8 +5,7 @@ import kaboom from "kaboom";
 const Game = () => {
   const kaplay = kaboom();
 
-
-    const gameContainerRef = useRef(null);
+  const gameContainerRef = useRef(null);
 
   useEffect(() => {
     if (gameContainerRef.current) {

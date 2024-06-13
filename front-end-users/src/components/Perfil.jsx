@@ -11,7 +11,7 @@ function Perfil() {
     <div className="container">
       {usuario === null ? (
         <>
-        <h1>No hay usuario registrado</h1>
+        <h1>No hay usuario loguedo</h1>
         <button className="btn btn-info " onClick={() => navigate('/registro')}>Registrar Usuario</button>
         </>
       ) : (
