@@ -1,47 +1,53 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
   const handleLogin = () => {
-
-    fetch('http://localhost:3000/api/users/login',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      }
-    ).then((res) => res.json())
-    .then((data) => {
-      if(data.error == false)
-        {
-          alert("El usuario fue logueado correctamente")
-          localStorage.setItem('user', JSON.stringify(data.data)) /// guardar el valor en el localstore
-          navigate('/')
-
-        } else {
-          alert("Ocurrió un error al loguear el usuario")
-        }
-      
-      console.log(data);  // respuesta del backend
+    fetch("http://localhost:3000/api/v1/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+      credentials: "include",
     })
-    .catch((error) => {
-      console.error('Error:', error)})
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.code == 200) {
+          alert(data.msg);
+          fetch("http://localhost:3000/api/v1/get-usuario", {
+            method: "GET",
+            credentials: "include",
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.code == 200) {
+                localStorage.setItem("user", JSON.stringify(data.data)); /// guardar el valor en el localstore
+                navigate("/");
+              } else {
+                alert("No puede acceder");
+              }
+            });
+        } else {
+          alert("Ocurrió un error al loguear el usuario");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   return (
     <div className="container">
-        <h1>Login de Usuario</h1>
+      <h1>Login de Usuario</h1>
       <form>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
@@ -56,7 +62,7 @@ function Login() {
             value={email}
           />
           <div id="emailHelp" className="form-text">
-          Introduce tu email
+            Introduce tu email
           </div>
         </div>
         <div className="mb-3">
@@ -71,12 +77,8 @@ function Login() {
             value={password}
           />
         </div>
-        
-        <button
-        type="button"
-        className="btn btn-primary"
-        onClick={handleLogin}
-        >
+
+        <button type="button" className="btn btn-primary" onClick={handleLogin}>
           Login
         </button>
       </form>

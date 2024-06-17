@@ -17,7 +17,7 @@ const Registro = () => {
     }
 
     //enviamos la petición al backend
-    fetch('http://localhost:3000/api/users/crear-usuario',
+    fetch('http://localhost:3000/api/v1/crear-usuario',
       {
         method: 'POST',
         headers: {
@@ -32,7 +32,7 @@ const Registro = () => {
       }
     ).then((res) => res.json())
     .then((data) => {
-      if(data.error == false)
+      if(data.code == 201)
         {
           alert("El usuario fue registrado correctamente")
         } else {
