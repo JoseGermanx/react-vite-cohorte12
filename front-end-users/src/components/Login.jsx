@@ -1,9 +1,19 @@
-import { useState } from "react";
+/* eslint-disable no-undef */
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [user, setUser] = useState([]);
+  const [profile, setProfile] = useState([]);
+
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => setUser(codeResponse),
+    onError: (error) => console.log("Login Failed:", error),
+  });
 
   const navigate = useNavigate();
 
@@ -45,6 +55,26 @@ function Login() {
       });
   };
 
+  useEffect(() => {
+    if (user) {
+      fetch(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.access_token}`,
+            Accept: "application/json",
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setProfile(data);
+          
+        })
+        .catch((err) => console.log(err));
+    }
+    console.log(profile);
+  }, [user]);
   return (
     <div className="container">
       <h1>Login de Usuario</h1>
@@ -82,6 +112,8 @@ function Login() {
           Login
         </button>
       </form>
+      {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} /> */}
+      <button onClick={login}>Sign in with Google 🚀 </button>
     </div>
   );
 }
