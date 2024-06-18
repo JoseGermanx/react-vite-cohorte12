@@ -131,7 +131,7 @@ function Login() {
         </button>
       </form>
       {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} /> */}
-      <button onClick={login}>Sign in with Google 🚀 </button>
+      <button className="my-3" onClick={login}>Sign in with Google 🚀 </button>
     </div>
   );
 }
