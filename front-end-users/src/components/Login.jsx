@@ -7,8 +7,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [user, setUser] = useState([]);
-  const [profile, setProfile] = useState([]);
+  const [user, setUser] = useState(null);
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setUser(codeResponse),
@@ -56,25 +55,44 @@ function Login() {
   };
 
   useEffect(() => {
-    if (user) {
-      fetch(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.access_token}`,
-            Accept: "application/json",
-          },
-        }
-      )
+    if (user !== null) {
+      fetch("http://localhost:3000/api/v1/google-in", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token_gg: user.access_token
+        }),
+        credentials: "include",
+      })
         .then((res) => res.json())
         .then((data) => {
-          setProfile(data);
-          
+          if (data.code == 200) {
+            alert(data.msg);
+            fetch("http://localhost:3000/api/v1/get-usuario", {
+              method: "GET",
+              credentials: "include",
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.code == 200) {
+                  localStorage.setItem("user", JSON.stringify(data.data)); /// guardar el valor en el localstore
+                  navigate("/");
+                } else {
+                  alert("No puede acceder");
+                }
+              });
+          } else {
+            alert("Ocurrió un error al loguear el usuario");
+          }
         })
-        .catch((err) => console.log(err));
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
-    console.log(profile);
   }, [user]);
+
   return (
     <div className="container">
       <h1>Login de Usuario</h1>
