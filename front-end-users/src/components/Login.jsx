@@ -93,6 +93,14 @@ function Login() {
     }
   }, [user]);
 
+  useEffect(() => {
+
+    if(localStorage.getItem("user")) {
+      navigate("/");
+    }
+  }, []);
+
+
   return (
     <div className="container">
       <h1>Login de Usuario</h1>
@@ -131,7 +139,7 @@ function Login() {
         </button>
       </form>
       {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} /> */}
-      <button className="my-3" onClick={login}>Sign in with Google 🚀 </button>
+      <button className="my-3 btn btn-secondary " onClick={login}>Sign in with Google 🚀 </button>
     </div>
   );
 }
